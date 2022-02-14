@@ -18,8 +18,21 @@ namespace UnimetalWeb.Controllers
             List<Reservation> reservationList = new List<Reservation>();
             using (var httpClient = new HttpClient())
             {
-            //http://localhost:44350/api/CompanyMaster
-                using (var response = await httpClient.GetAsync("http://localhost:44350/api/CompanyMaster", cancellationToken))
+                //http://localhost:44350/api/CompanyMaster
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+                //try
+                //{
+                //    var response = await httpClient.GetAsync("https://localhost:44350/api/CompanyMaster", cancellationToken);
+                //    string apiResponse = await response.Content.ReadAsStringAsync();
+                //    reservationList = JsonConvert.DeserializeObject<List<Reservation>>(apiResponse);
+                //}
+                //catch (Exception ex)
+                //{
+
+                //    throw;
+                //}
+
+                using (var response = await httpClient.GetAsync("https://localhost:44350/api/CompanyMaster", cancellationToken))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     reservationList = JsonConvert.DeserializeObject<List<Reservation>>(apiResponse);
