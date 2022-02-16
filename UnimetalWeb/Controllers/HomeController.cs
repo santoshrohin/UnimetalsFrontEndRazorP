@@ -15,7 +15,7 @@ namespace UnimetalWeb.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             CancellationToken cancellationToken = new CancellationToken();
-            List<Reservation> reservationList = new List<Reservation>();
+            CompanyMasterResponse reservationList = new CompanyMasterResponse();
             using (var httpClient = new HttpClient())
             {
                 //http://localhost:44350/api/CompanyMaster
@@ -32,10 +32,10 @@ namespace UnimetalWeb.Controllers
                 //    throw;
                 //}
 
-                using (var response = await httpClient.GetAsync("https://localhost:44350/api/CompanyMaster", cancellationToken))
+                using (var response = await httpClient.GetAsync("http://localhost:44350/api/CompanyMaster", cancellationToken))
                 {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    reservationList = JsonConvert.DeserializeObject<List<Reservation>>(apiResponse);
+                    var apiResponse = await response. Content.ReadAsStringAsync();
+                    reservationList = JsonConvert.DeserializeObject<CompanyMasterResponse>(apiResponse);
                 }
             }
             return View(reservationList);
