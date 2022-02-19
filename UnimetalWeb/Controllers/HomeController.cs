@@ -32,7 +32,7 @@ namespace UnimetalWeb.Controllers
                 //    throw;
                 //}
 
-                using (var response = await httpClient.GetAsync("http://localhost:44350/api/CompanyMaster", cancellationToken))
+                using (var response = await httpClient.GetAsync("https://localhost:44350/api/CompanyMaster", cancellationToken))
                 {
                     var apiResponse = await response. Content.ReadAsStringAsync();
                     reservationList = JsonConvert.DeserializeObject<CompanyMasterResponse>(apiResponse);

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<UnimetalWeb.Models.Unitmaster>
+
+@{
+    ViewData["Title"] = "Index";
+    
+}
+
+    
+
+<section class="content">
+    <div class="container-fluid">
+        <hr />
+       
+        
+        <div class="row">
+            <div class="col-12">
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Unit Master</h3>
+                        <a asp-action="Create" asp-controller="UnitMaster" title="Create New" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Unit Name
+                                    </th>
+                                    <th>
+                                        Unit Abbreviation
+                                    </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-info">Action</button>
+                                                <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" style="">
+                                                    
+                                                    <a asp-action="Edit" asp-route-id="@item.Id" title="Edit"  class="dropdown-item"><i class="fas fa-edit"></i></a>
+                                                    <a asp-action="Edit" asp-route-id="@item.Id" title="Details" class="dropdown-item"><i class="fas fa-info-circle"></i></a>
+                                                    <a asp-action="Edit" asp-route-id="@item.Id" title="Delete" class="dropdown-item"><i class="fas fa-trash"></i></a>
+                                                </div>
+                                            </div>
+                                            
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UnitName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UnitAbbreviation)
+                                        </td>
+                                        @*<td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                        </td>*@
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>
+                                        Unit Name
+                                    </th>
+                                    <th>
+                                        Unit Abbreviation
+                                    </th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
