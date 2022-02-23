@@ -1,25 +1,25 @@
-﻿@model IEnumerable<UnimetalWeb.Models.Unitmaster>
+﻿@model IEnumerable<UnimetalWeb.Models.Itemsubcategorymaster>
 
 @{
     ViewData["Title"] = "Index";
-    
+
 }
 
-    
+
 
 <section class="content">
     <div class="container-fluid">
         <hr />
 
-       
+
         <div class="row">
             <div class="col-12">
 
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Unit Master</h3>
-                        <a asp-action="Create" asp-controller="UnitMaster" title="Create New" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
+                        <h3 class="card-title">Item Sub Category Master</h3>
+                        <a asp-action="Create" asp-controller="Itemsubcategorymaster" title="Create New" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -27,11 +27,9 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Unit Name
+                                        Sub Category Title
                                     </th>
-                                    <th>
-                                        Unit Abbreviation
-                                    </th>
+                                    
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -47,24 +45,22 @@
                                                 </button>
                                                 <div class="dropdown-menu" role="menu" style="">
 
-                                                    <a asp-action="Edit" asp-route-id="@item.Id" title="Edit" class="dropdown-item"><i class="fas fa-edit"></i></a>
-                                                    <a asp-action="Details" asp-route-id="@item.Id" title="Details" class="dropdown-item"><i class="fas fa-info-circle"></i></a>
-                                                    <a asp-action="Delete" asp-route-id="@item.Id" title="Delete" class="dropdown-item"><i class="fas fa-trash"></i></a>
+                                                    <a asp-action="Edit" asp-route-id="@item.id" title="Edit" class="dropdown-item"><i class="fas fa-edit"></i></a>
+                                                    <a asp-action="Details" asp-route-id="@item.id" title="Details" class="dropdown-item"><i class="fas fa-info-circle"></i></a>
+                                                    <a asp-action="Delete" asp-route-id="@item.id" title="Delete" class="dropdown-item"><i class="fas fa-trash"></i></a>
                                                 </div>
                                             </div>
 
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.UnitName)
+                                            @Html.DisplayFor(modelItem => item.sub_category_title)
                                         </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.UnitAbbreviation)
-                                        </td>
+                                        
                                         @*<td>
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                        </td>*@
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                            </td>*@
                                     </tr>
                                 }
 
@@ -72,11 +68,9 @@
                             <tfoot>
                                 <tr>
                                     <th>
-                                        Unit Name
+                                        Sub Category Title
                                     </th>
-                                    <th>
-                                        Unit Abbreviation
-                                    </th>
+                                    
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

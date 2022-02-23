@@ -25,7 +25,7 @@ namespace UnimetalWeb.Controllers
         public async Task<IActionResult> Index()
         {
             CancellationToken cancellationToken = new CancellationToken();
-            SelectListItem selectListItem = new SelectListItem();
+            DropDownListItem selectListItem = new DropDownListItem();
 
             //string FieldNames = "OpeningDate as Value,	ClosingDate as Text  ";
             string FieldNames = "id as Value,ClosingDate as Text";
@@ -36,13 +36,13 @@ namespace UnimetalWeb.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                //http://localhost:44350/api/CompanyMaster
+                
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = await httpClient.GetAsync("https://localhost:44350/api/CommonHelper/" + FieldNames+"/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                using (var response = await httpClient.GetAsync(_baseURL+"api/CommonHelper/" + FieldNames+"/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    selectListItem = JsonConvert.DeserializeObject<SelectListItem>(apiResponse);
+                    selectListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
                     ViewBag.selectListItem = selectListItem.result;
                 }
             }
@@ -75,7 +75,7 @@ namespace UnimetalWeb.Controllers
                 }
             }
             CancellationToken cancellationToken = new CancellationToken();
-            SelectListItem selectListItem = new SelectListItem();
+            DropDownListItem selectListItem = new DropDownListItem();
 
             //string FieldNames = "OpeningDate as Value,	ClosingDate as Text  ";
             string FieldNames = "id as Value,ClosingDate as Text";
@@ -86,13 +86,13 @@ namespace UnimetalWeb.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                //http://localhost:44350/api/CompanyMaster
+                
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = await httpClient.GetAsync("https://localhost:44350/api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                using (var response = await httpClient.GetAsync(_baseURL+"api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    selectListItem = JsonConvert.DeserializeObject<SelectListItem>(apiResponse);
+                    selectListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
                     ViewBag.selectListItem = selectListItem.result;
                 }
             }

@@ -11,13 +11,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace UnimetalWeb.Controllers
 {
-    public class UnitMasterController : Controller
+    public class TrayTypeMasterController : Controller
     {
         private IConfiguration _configuration;
         private string _baseURL;
         public AuthResponse _authResponse;
 
-        public UnitMasterController( IConfiguration configuration)
+        public TrayTypeMasterController(IConfiguration configuration)
         {
             _configuration = configuration;
             _baseURL = _configuration.GetSection("baseULR").Value;
@@ -26,8 +26,8 @@ namespace UnimetalWeb.Controllers
         public async Task<IActionResult> Index()
         {
             CancellationToken cancellationToken = new CancellationToken();
-            UnitmasterResponse unitmasterResponse = new UnitmasterResponse();
-            
+            TraytypemasterResponse traytypemasterResponse = new TraytypemasterResponse();
+
             using (HttpClientHandler handler = new HttpClientHandler())
             {
                 using (var httpClient = new HttpClient(handler))
@@ -36,78 +36,78 @@ namespace UnimetalWeb.Controllers
                     httpClient.Timeout = TimeSpan.FromMinutes(10);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authResponse.result.Token);
-                    using (var response = await httpClient.GetAsync(_baseURL + "api/Unitmaster",cancellationToken))
+                    using (var response = await httpClient.GetAsync(_baseURL + "api/TrayTypeMaster", cancellationToken))
                     {
                         var apiResponse = await response.Content.ReadAsStringAsync();
-                        unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterResponse>(apiResponse);
+                        traytypemasterResponse = JsonConvert.DeserializeObject<TraytypemasterResponse>(apiResponse);
                     }
                 }
             }
-            
-            return View(unitmasterResponse.result);
+
+            return View(traytypemasterResponse.result);
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             CancellationToken cancellationToken = new CancellationToken();
-            UnitmasterGetAll unitmasterResponse = new UnitmasterGetAll();
-            Unitmaster unitmaster = new Unitmaster();
+            TraytypemasterGetAll traytypemasterResponse = new TraytypemasterGetAll();
+            Traytypemaster traytypemaster = new Traytypemaster();
 
             using (var httpClient = new HttpClient())
             {
                 
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = await httpClient.GetAsync(_baseURL + "api/Unitmaster/" + id, cancellationToken))
+                using (var response = await httpClient.GetAsync(_baseURL + "api/TrayTypeMaster/" + id, cancellationToken))
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterGetAll>(apiResponse);
-                    unitmaster = unitmasterResponse.result;
+                    traytypemasterResponse = JsonConvert.DeserializeObject<TraytypemasterGetAll>(apiResponse);
+                    traytypemaster = traytypemasterResponse.result;
 
                 }
             }
-            return View(unitmaster);
+            return View(traytypemaster);
         }
         public ActionResult Create()
         {
             return View("Edit");
         }
         [HttpPost]
-        public async Task<ActionResult> Create(Unitmaster unitmaster)
+        public async Task<ActionResult> Create(Traytypemaster traytypemaster)
         {
             _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
-            unitmaster.Id = 0;
-            unitmaster.CompanyId = _authResponse.result.CompanyId; ;
-            unitmaster.CompanyCode = _authResponse.result.Id;
-            unitmaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
-            unitmaster.UserName = _authResponse.result.Username;
-            unitmaster.IsModify = false;
-            unitmaster.IsDelete = false;
-            UnitmasterGetAll unitmasterResponse = new UnitmasterGetAll();
+            traytypemaster.Id = 0;
+            traytypemaster.CompanyId = _authResponse.result.CompanyId; ;
+            traytypemaster.CompanyCode = _authResponse.result.Id;
+            traytypemaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
+            traytypemaster.UserName = _authResponse.result.Username;
+            traytypemaster.IsModify = false;
+            traytypemaster.IsDelete = false;
+            TraytypemasterGetAll traytypemasterResponse = new TraytypemasterGetAll();
             CancellationToken cancellationToken = new CancellationToken();
-            string data = JsonConvert.SerializeObject(unitmaster);
+            string data = JsonConvert.SerializeObject(traytypemaster);
             StringContent stringContent = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.PostAsync(_baseURL + "api/Unitmaster/", stringContent).Result)
+                using (var response = httpClient.PostAsync(_baseURL + "api/Traytypemaster/", stringContent).Result)
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterGetAll>(apiResponse);
-                    if (unitmasterResponse.IsError == false)
+                    traytypemasterResponse = JsonConvert.DeserializeObject<TraytypemasterGetAll>(apiResponse);
+                    if (traytypemasterResponse.IsError == false)
                     {
-                        TempData["SuccessMessage"] = unitmasterResponse.Message;
+                        TempData["SuccessMessage"] = traytypemasterResponse.Message;
 
                         //TempData["InfoMessage"] = string.Format("Hello {0}.\\nCurrent Date and Time: {1}", "Anshu", DateTime.Now.ToString());
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = unitmasterResponse.Message;
+                        TempData["ErrorMessage"] = traytypemasterResponse.Message;
 
                     }
-                    if (unitmasterResponse.IsError == false)
+                    if (traytypemasterResponse.IsError == false)
                     {
 
                         return RedirectToAction("Index");
@@ -117,64 +117,64 @@ namespace UnimetalWeb.Controllers
             return View("Edit");
         }
         [HttpPost]
-        public async Task<ActionResult> Edit(Unitmaster unitmaster)
+        public async Task<ActionResult> Edit(Traytypemaster traytypemaster)
         {
-            
-            _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
-            unitmaster.CompanyId = _authResponse.result.CompanyId; ;
-            unitmaster.CompanyCode = _authResponse.result.Id;
-            unitmaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
-            unitmaster.UserName = _authResponse.result.Username;
-            unitmaster.IsModify = false;
-            unitmaster.IsDelete = false;
 
-            UnitmasterGetAll unitmasterResponse = new UnitmasterGetAll();
+            _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
+            traytypemaster.CompanyId = _authResponse.result.CompanyId; ;
+            traytypemaster.CompanyCode = _authResponse.result.Id;
+            traytypemaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
+            traytypemaster.UserName = _authResponse.result.Username;
+            traytypemaster.IsModify = false;
+            traytypemaster.IsDelete = false;
+
+            TraytypemasterGetAll traytypemasterResponse = new TraytypemasterGetAll();
             CancellationToken cancellationToken = new CancellationToken();
-            string data = JsonConvert.SerializeObject(unitmaster);
+            string data = JsonConvert.SerializeObject(traytypemaster);
             StringContent stringContent = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.PutAsync(_baseURL + "api/Unitmaster/", stringContent).Result)
+                using (var response = httpClient.PutAsync(_baseURL + "api/Traytypemaster/", stringContent).Result)
                 {
-                    var apiResponse =  await response.Content.ReadAsStringAsync();
-                    unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterGetAll>(apiResponse);
-                    if (unitmasterResponse.IsError == false)
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    traytypemasterResponse = JsonConvert.DeserializeObject<TraytypemasterGetAll>(apiResponse);
+                    if (traytypemasterResponse.IsError == false)
                     {
-                        TempData["SuccessMessage"] = unitmasterResponse.Message;
+                        TempData["SuccessMessage"] = traytypemasterResponse.Message;
 
                         //TempData["InfoMessage"] = string.Format("Hello {0}.\\nCurrent Date and Time: {1}", "Anshu", DateTime.Now.ToString());
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = unitmasterResponse.Message;
-                        
+                        TempData["ErrorMessage"] = traytypemasterResponse.Message;
+
                     }
                     if (response.IsSuccessStatusCode)
                     {
-                        
+
                         return RedirectToAction("Index");
                     }
-                    
-                    
-                        
+
+
+
                 }
             }
-            return View("Edit",unitmaster);
+            return View("Edit", traytypemaster);
         }
         [HttpGet]
         public ActionResult Delete(int id)
         {
 
             CancellationToken cancellationToken = new CancellationToken();
-            
+
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.GetAsync(_baseURL + "api/Unitmaster/" + id).Result)
+                using (var response = httpClient.GetAsync(_baseURL + "api/Traytypemaster/" + id).Result)
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -188,21 +188,22 @@ namespace UnimetalWeb.Controllers
         public async Task<IActionResult> Details(int id)
         {
             CancellationToken cancellationToken = new CancellationToken();
-            UnitmasterGetAll unitmasterResponse = new UnitmasterGetAll();
+            TraytypemasterGetAll traytypemasterResponse = new TraytypemasterGetAll();
 
             using (var httpClient = new HttpClient())
             {
                 
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = await httpClient.GetAsync(_baseURL + "api/Unitmaster/" + id, cancellationToken))
+                using (var response = await httpClient.GetAsync(_baseURL + "api/Traytypemaster/" + id, cancellationToken))
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterGetAll>(apiResponse);
+                    traytypemasterResponse = JsonConvert.DeserializeObject<TraytypemasterGetAll>(apiResponse);
                 }
             }
-            return View(unitmasterResponse.result);
+            return View(traytypemasterResponse.result);
         }
-        
+
     }
+    
 }

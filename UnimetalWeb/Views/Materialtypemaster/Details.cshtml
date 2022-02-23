@@ -1,0 +1,112 @@
+﻿@model UnimetalWeb.Models.Materialtypemaster
+
+@{
+    ViewData["Title"] = "Details";
+
+}
+
+
+<hr />
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Material Type Master</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="Id"></label>
+                                <input asp-for="Id" class="form-control" disabled />
+                                <span asp-validation-for="Id" class="text-danger"></span>
+
+
+
+                            </div>
+                            <div class="form-group">
+
+                                <label asp-for="MaterialTypeTitle"></label>
+                                <input asp-for="MaterialTypeTitle" class="form-control" />
+                                <span asp-validation-for="MaterialTypeTitle" class="text-danger"></span>
+
+
+                            </div>
+                            <div class="form-group">
+
+                                <label asp-for="Abbreviation"></label>
+                                <input asp-for="Abbreviation" class="form-control" />
+                                <span asp-validation-for="Abbreviation" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label asp-for="MaterialTypeCategoryID"></label>
+                                @if (Model.MaterialTypeCategoryID != 0)
+                                {
+                                    <select id="ddlMaterialTypeCategoryID" asp-for="MaterialTypeCategoryID" class="form-control select2" asp-items="@(new SelectList(ViewBag.MaterialTypeCategoryItem, "Value", "Text", Model.MaterialTypeCategoryID))">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select id="ddlMaterialTypeCategoryID" asp-for="MaterialTypeCategoryID" class="form-control select2" asp-items="@(new SelectList(ViewBag.MaterialTypeCategoryItem, "Value", "Text"))">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                }
+
+                                <span asp-validation-for="MaterialTypeCategoryID" class="text-danger"></span>
+                                <input type="hidden" asp-for="MaterialTypeCategoryID" />
+
+                            </div>
+                            <div class="form-group">
+
+                                <label asp-for="MaterialTypeProductLineID"></label>
+                                @if (Model.MaterialTypeProductLineID != 0)
+                                {
+                                    <select id="ddlMaterialTypeProductLineID" asp-for="MaterialTypeProductLineID" class="form-control select2" asp-items="@(new SelectList(ViewBag.MaterialTypeProductLineItem, "Value", "Text", Model.MaterialTypeProductLineID))">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select id="ddlMaterialTypeProductLineID" asp-for="MaterialTypeProductLineID" class="form-control select2" asp-items="@(new SelectList(ViewBag.MaterialTypeProductLineItem, "Value", "Text"))">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                }
+
+                                <span asp-validation-for="MaterialTypeProductLineID" class="text-danger"></span>
+                                <input type="hidden" asp-for="MaterialTypeProductLineID" />
+
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                       
+                        <div class="card-footer">
+
+                            <a asp-action="Edit" asp-controller="Materialtypemaster" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+                            <a asp-action="Index" class="btn btn-danger">Back to List</a>
+                        </div>
+
+                    }
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>

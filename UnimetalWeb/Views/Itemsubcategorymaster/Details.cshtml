@@ -1,0 +1,65 @@
+﻿@model UnimetalWeb.Models.Itemsubcategorymaster
+
+@{
+    ViewData["Title"] = "Details";
+
+}
+
+
+<hr />
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Item Sub Category Master</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="id"></label>
+                                <input asp-for="id" class="form-control" disabled />
+                                <span asp-validation-for="id" class="text-danger"></span>
+
+
+
+                            </div>
+                            <div class="form-group">
+
+                                <label asp-for="sub_category_title"></label>
+                                <input asp-for="sub_category_title" class="form-control" />
+                                <span asp-validation-for="sub_category_title" class="text-danger"></span>
+
+
+                            </div>
+
+
+                        </div>
+                        <!-- /.card-body -->
+
+                <div class="card-footer">
+                    
+                    <a asp-action="Edit" asp-controller="Itemsubcategorymaster" asp-route-id="@Model.id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Index" class="btn btn-danger">Back to List</a>
+                </div>
+
+                    }
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>

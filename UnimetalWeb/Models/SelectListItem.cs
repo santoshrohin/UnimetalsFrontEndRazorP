@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace UnimetalWeb.Models
 {
-    public class SelectListItem:CommonResponse
+    public class DropDownListItem:CommonResponse
     {
         
         public List<Itemlist> result { get; set; }

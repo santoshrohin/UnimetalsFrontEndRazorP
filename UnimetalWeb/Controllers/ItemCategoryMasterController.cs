@@ -11,13 +11,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace UnimetalWeb.Controllers
 {
-    public class UnitMasterController : Controller
+    
+    public class ItemCategoryMasterController : Controller
     {
         private IConfiguration _configuration;
         private string _baseURL;
         public AuthResponse _authResponse;
 
-        public UnitMasterController( IConfiguration configuration)
+        public ItemCategoryMasterController(IConfiguration configuration)
         {
             _configuration = configuration;
             _baseURL = _configuration.GetSection("baseULR").Value;
@@ -26,8 +27,8 @@ namespace UnimetalWeb.Controllers
         public async Task<IActionResult> Index()
         {
             CancellationToken cancellationToken = new CancellationToken();
-            UnitmasterResponse unitmasterResponse = new UnitmasterResponse();
-            
+            ItemCategoryMasterResponse itemCategoryMasterResponse = new ItemCategoryMasterResponse();
+
             using (HttpClientHandler handler = new HttpClientHandler())
             {
                 using (var httpClient = new HttpClient(handler))
@@ -36,78 +37,78 @@ namespace UnimetalWeb.Controllers
                     httpClient.Timeout = TimeSpan.FromMinutes(10);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authResponse.result.Token);
-                    using (var response = await httpClient.GetAsync(_baseURL + "api/Unitmaster",cancellationToken))
+                    using (var response = await httpClient.GetAsync(_baseURL + "api/ItemCategoryMaster", cancellationToken))
                     {
                         var apiResponse = await response.Content.ReadAsStringAsync();
-                        unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterResponse>(apiResponse);
+                        itemCategoryMasterResponse = JsonConvert.DeserializeObject<ItemCategoryMasterResponse>(apiResponse);
                     }
                 }
             }
-            
-            return View(unitmasterResponse.result);
+
+            return View(itemCategoryMasterResponse.result);
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             CancellationToken cancellationToken = new CancellationToken();
-            UnitmasterGetAll unitmasterResponse = new UnitmasterGetAll();
-            Unitmaster unitmaster = new Unitmaster();
+            ItemCategoryMasterGetAll itemCategoryMasterResponse = new ItemCategoryMasterGetAll();
+            ItemCategoryMaster itemCategoryMaster = new ItemCategoryMaster();
 
             using (var httpClient = new HttpClient())
             {
-                
+
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = await httpClient.GetAsync(_baseURL + "api/Unitmaster/" + id, cancellationToken))
+                using (var response = await httpClient.GetAsync(_baseURL + "api/ItemCategoryMaster/" + id, cancellationToken))
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterGetAll>(apiResponse);
-                    unitmaster = unitmasterResponse.result;
+                    itemCategoryMasterResponse = JsonConvert.DeserializeObject<ItemCategoryMasterGetAll>(apiResponse);
+                    itemCategoryMaster = itemCategoryMasterResponse.result;
 
                 }
             }
-            return View(unitmaster);
+            return View(itemCategoryMaster);
         }
         public ActionResult Create()
         {
             return View("Edit");
         }
         [HttpPost]
-        public async Task<ActionResult> Create(Unitmaster unitmaster)
+        public async Task<ActionResult> Create(ItemCategoryMaster itemCategoryMaster)
         {
             _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
-            unitmaster.Id = 0;
-            unitmaster.CompanyId = _authResponse.result.CompanyId; ;
-            unitmaster.CompanyCode = _authResponse.result.Id;
-            unitmaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
-            unitmaster.UserName = _authResponse.result.Username;
-            unitmaster.IsModify = false;
-            unitmaster.IsDelete = false;
-            UnitmasterGetAll unitmasterResponse = new UnitmasterGetAll();
+            itemCategoryMaster.Id = 0;
+            itemCategoryMaster.CompanyId = _authResponse.result.CompanyId; ;
+            //itemCategoryMaster.CompanyCode = _authResponse.result.Id;
+            //itemCategoryMaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
+            //itemCategoryMaster.UserName = _authResponse.result.Username;
+            //itemCategoryMaster.IsModify = false;
+            //itemCategoryMaster.IsDelete = false;
+            ItemCategoryMasterGetAll itemCategoryMasterResponse = new ItemCategoryMasterGetAll();
             CancellationToken cancellationToken = new CancellationToken();
-            string data = JsonConvert.SerializeObject(unitmaster);
+            string data = JsonConvert.SerializeObject(itemCategoryMaster);
             StringContent stringContent = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.PostAsync(_baseURL + "api/Unitmaster/", stringContent).Result)
+                using (var response = httpClient.PostAsync(_baseURL + "api/ItemCategoryMaster/", stringContent).Result)
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterGetAll>(apiResponse);
-                    if (unitmasterResponse.IsError == false)
+                    itemCategoryMasterResponse = JsonConvert.DeserializeObject<ItemCategoryMasterGetAll>(apiResponse);
+                    if (itemCategoryMasterResponse.IsError == false)
                     {
-                        TempData["SuccessMessage"] = unitmasterResponse.Message;
+                        TempData["SuccessMessage"] = itemCategoryMasterResponse.Message;
 
                         //TempData["InfoMessage"] = string.Format("Hello {0}.\\nCurrent Date and Time: {1}", "Anshu", DateTime.Now.ToString());
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = unitmasterResponse.Message;
+                        TempData["ErrorMessage"] = itemCategoryMasterResponse.Message;
 
                     }
-                    if (unitmasterResponse.IsError == false)
+                    if (itemCategoryMasterResponse.IsError == false)
                     {
 
                         return RedirectToAction("Index");
@@ -117,64 +118,64 @@ namespace UnimetalWeb.Controllers
             return View("Edit");
         }
         [HttpPost]
-        public async Task<ActionResult> Edit(Unitmaster unitmaster)
+        public async Task<ActionResult> Edit(ItemCategoryMaster itemCategoryMaster)
         {
-            
-            _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
-            unitmaster.CompanyId = _authResponse.result.CompanyId; ;
-            unitmaster.CompanyCode = _authResponse.result.Id;
-            unitmaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
-            unitmaster.UserName = _authResponse.result.Username;
-            unitmaster.IsModify = false;
-            unitmaster.IsDelete = false;
 
-            UnitmasterGetAll unitmasterResponse = new UnitmasterGetAll();
+            _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
+            itemCategoryMaster.CompanyId = _authResponse.result.CompanyId; ;
+            //itemCategoryMaster.CompanyCode = _authResponse.result.Id;
+            //itemCategoryMaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
+            //itemCategoryMaster.UserName = _authResponse.result.Username;
+            //itemCategoryMaster.IsModify = false;
+            //itemCategoryMaster.IsDelete = false;
+
+            ItemCategoryMasterGetAll itemCategoryMasterResponse = new ItemCategoryMasterGetAll();
             CancellationToken cancellationToken = new CancellationToken();
-            string data = JsonConvert.SerializeObject(unitmaster);
+            string data = JsonConvert.SerializeObject(itemCategoryMaster);
             StringContent stringContent = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.PutAsync(_baseURL + "api/Unitmaster/", stringContent).Result)
+                using (var response = httpClient.PutAsync(_baseURL + "api/ItemCategoryMaster/", stringContent).Result)
                 {
-                    var apiResponse =  await response.Content.ReadAsStringAsync();
-                    unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterGetAll>(apiResponse);
-                    if (unitmasterResponse.IsError == false)
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    itemCategoryMasterResponse = JsonConvert.DeserializeObject<ItemCategoryMasterGetAll>(apiResponse);
+                    if (itemCategoryMasterResponse.IsError == false)
                     {
-                        TempData["SuccessMessage"] = unitmasterResponse.Message;
+                        TempData["SuccessMessage"] = itemCategoryMasterResponse.Message;
 
                         //TempData["InfoMessage"] = string.Format("Hello {0}.\\nCurrent Date and Time: {1}", "Anshu", DateTime.Now.ToString());
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = unitmasterResponse.Message;
-                        
+                        TempData["ErrorMessage"] = itemCategoryMasterResponse.Message;
+
                     }
                     if (response.IsSuccessStatusCode)
                     {
-                        
+
                         return RedirectToAction("Index");
                     }
-                    
-                    
-                        
+
+
+
                 }
             }
-            return View("Edit",unitmaster);
+            return View("Edit", itemCategoryMaster);
         }
         [HttpGet]
         public ActionResult Delete(int id)
         {
 
             CancellationToken cancellationToken = new CancellationToken();
-            
+
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.GetAsync(_baseURL + "api/Unitmaster/" + id).Result)
+                using (var response = httpClient.GetAsync(_baseURL + "api/ItemCategoryMaster/" + id).Result)
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -188,21 +189,21 @@ namespace UnimetalWeb.Controllers
         public async Task<IActionResult> Details(int id)
         {
             CancellationToken cancellationToken = new CancellationToken();
-            UnitmasterGetAll unitmasterResponse = new UnitmasterGetAll();
+            ItemCategoryMasterGetAll itemCategoryMasterResponse = new ItemCategoryMasterGetAll();
 
             using (var httpClient = new HttpClient())
             {
-                
+
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = await httpClient.GetAsync(_baseURL + "api/Unitmaster/" + id, cancellationToken))
+                using (var response = await httpClient.GetAsync(_baseURL + "api/ItemCategoryMaster/" + id, cancellationToken))
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    unitmasterResponse = JsonConvert.DeserializeObject<UnitmasterGetAll>(apiResponse);
+                    itemCategoryMasterResponse = JsonConvert.DeserializeObject<ItemCategoryMasterGetAll>(apiResponse);
                 }
             }
-            return View(unitmasterResponse.result);
+            return View(itemCategoryMasterResponse.result);
         }
-        
+
     }
 }

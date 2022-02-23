@@ -11,7 +11,10 @@ namespace UnimetalWeb.Controllers
     {
         public IActionResult Index()
         {
+            
             var loginDetails = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
+            TempData["userName"] = loginDetails.result.Name;
+
             return View();
         }
     }

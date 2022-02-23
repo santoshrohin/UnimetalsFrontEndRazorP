@@ -1,25 +1,26 @@
-﻿@model IEnumerable<UnimetalWeb.Models.Unitmaster>
+﻿@model IEnumerable<UnimetalWeb.Models.Productlinemaster>
+
 
 @{
     ViewData["Title"] = "Index";
-    
+
 }
 
-    
+
 
 <section class="content">
     <div class="container-fluid">
         <hr />
 
-       
+
         <div class="row">
             <div class="col-12">
 
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Unit Master</h3>
-                        <a asp-action="Create" asp-controller="UnitMaster" title="Create New" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
+                        <h3 class="card-title">Product Line Master</h3>
+                        <a asp-action="Create" asp-controller="Productlinemaster" title="Create New" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -27,10 +28,10 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Unit Name
+                                        Product Line Title
                                     </th>
                                     <th>
-                                        Unit Abbreviation
+                                        Product Line Abbreviation
                                     </th>
                                     <th>Action</th>
                                 </tr>
@@ -55,16 +56,16 @@
 
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.UnitName)
+                                            @Html.DisplayFor(modelItem => item.ProductLineTitle)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.UnitAbbreviation)
+                                            @Html.DisplayFor(modelItem => item.ProductLineAbbreviation)
                                         </td>
                                         @*<td>
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                        </td>*@
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                            </td>*@
                                     </tr>
                                 }
 
@@ -72,10 +73,10 @@
                             <tfoot>
                                 <tr>
                                     <th>
-                                        Unit Name
+                                        Product Line Title
                                     </th>
                                     <th>
-                                        Unit Abbreviation
+                                        Product Line Abbreviation
                                     </th>
                                     <th>Action</th>
                                 </tr>
