@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using UnimetalWeb.Helpers;
 using UnimetalWeb.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace UnimetalWeb.Controllers
 {
@@ -34,6 +36,12 @@ namespace UnimetalWeb.Controllers
                 using (var httpClient = new HttpClient(handler))
                 {
                     _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
+                    if (_authResponse == null)
+                    {
+
+                        return RedirectToActionPermanent("Index", "Login");
+
+                    }
                     httpClient.Timeout = TimeSpan.FromMinutes(10);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authResponse.result.Token);
@@ -67,11 +75,270 @@ namespace UnimetalWeb.Controllers
 
                 }
             }
+
+            string FieldNames = "id as Value,CategoryName as Text";
+            string TableNames = "ItemCategoryMaster";
+            string WhereCondition = "isdelete=0";
+            string DropDownId = "dd";
+
+            DropDownListItem dropDownListItem = new DropDownListItem();
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.ItemCategoryId) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.ItemCategoryId).Selected = true;
+                }
+
+                ViewBag.ItemCategoryMasterItem = listItems;
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                dropDownListItem = new DropDownListItem();
+                FieldNames = "id as Value,HsnNumber as Text";
+                TableNames = "hsnmaster";
+
+
+                listItems = new List<SelectListItem>();
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.GSTId) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.GSTId).Selected = true;
+                }
+
+                ViewBag.hsnmasterItem = listItems;
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                dropDownListItem = new DropDownListItem();
+                FieldNames = "id as Value,UnitName as Text";
+                TableNames = "UnitMaster";
+
+
+                listItems = new List<SelectListItem>();
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOM) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOM).Selected = true;
+                }
+
+                ViewBag.UOMItem = listItems;
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                dropDownListItem = new DropDownListItem();
+                FieldNames = "id as Value,UnitName as Text";
+                TableNames = "UnitMaster";
+
+
+                listItems = new List<SelectListItem>();
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOMAlternateID) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOMAlternateID).Selected = true;
+                }
+
+                ViewBag.UOMAlternateItem = listItems;
+            }
             return View(itemMaster);
         }
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View("Edit");
+            CancellationToken cancellationToken = new CancellationToken();
+            ItemMaster itemMaster = new ItemMaster();
+            string FieldNames = "id as Value,CategoryName as Text";
+            string TableNames = "ItemCategoryMaster";
+            string WhereCondition = "isdelete=0";
+            string DropDownId = "dd";
+
+            DropDownListItem dropDownListItem = new DropDownListItem();
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.ItemCategoryId) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.ItemCategoryId).Selected = true;
+                }
+
+                ViewBag.ItemCategoryMasterItem = listItems;
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                dropDownListItem = new DropDownListItem();
+                FieldNames = "id as Value,HsnNumber as Text";
+                TableNames = "hsnmaster";
+
+
+                listItems = new List<SelectListItem>();
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.GSTId) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.GSTId).Selected = true;
+                }
+
+                ViewBag.hsnmasterItem = listItems;
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                dropDownListItem = new DropDownListItem();
+                FieldNames = "id as Value,UnitName as Text";
+                TableNames = "UnitMaster";
+
+
+                listItems = new List<SelectListItem>();
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOM) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOM).Selected = true;
+                }
+
+                ViewBag.UOMItem = listItems;
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                dropDownListItem = new DropDownListItem();
+                FieldNames = "id as Value,UnitName as Text";
+                TableNames = "UnitMaster";
+
+
+                listItems = new List<SelectListItem>();
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOMAlternateID) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOMAlternateID).Selected = true;
+                }
+
+                ViewBag.UOMAlternateItem = listItems;
+            }
+            return View("Edit",itemMaster);
         }
         [HttpPost]
         public async Task<ActionResult> Create(ItemMaster itemMaster)
@@ -153,6 +420,10 @@ namespace UnimetalWeb.Controllers
                         TempData["ErrorMessage"] = itemMasterResponse.Message;
 
                     }
+                    if (itemMasterResponse.Message == "Duplicate Record")
+                    {
+                        return RedirectToAction("Edit", itemMaster.Id);
+                    }
                     if (response.IsSuccessStatusCode)
                     {
 
@@ -166,31 +437,41 @@ namespace UnimetalWeb.Controllers
             return View("Edit", itemMaster);
         }
         [HttpGet]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
 
             CancellationToken cancellationToken = new CancellationToken();
-
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.GetAsync(_baseURL + "api/ItemMaster/" + id).Result)
+                using (var response = httpClient.GetAsync(_baseURL + "api/ItemMaster/Delete?id=" + id).Result)
                 {
+                    StatusCommonResponse statusCommonResponse = new StatusCommonResponse();
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    statusCommonResponse = JsonConvert.DeserializeObject<StatusCommonResponse>(apiResponse);
+                    if (statusCommonResponse.IsError == false)
+                    {
+                        TempData["SuccessMessage"] = statusCommonResponse.Message;
+
+                        //TempData["InfoMessage"] = string.Format("Hello {0}.\\nCurrent Date and Time: {1}", "Anshu", DateTime.Now.ToString());
+                    }
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction("Index");
                     }
                 }
             }
+
             return View("Index");
         }
+        
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             CancellationToken cancellationToken = new CancellationToken();
             ItemMasterGetAll itemMasterResponse = new ItemMasterGetAll();
-
+            ItemMaster itemMaster = new ItemMaster();
             using (var httpClient = new HttpClient())
             {
 
@@ -201,6 +482,136 @@ namespace UnimetalWeb.Controllers
                     var apiResponse = await response.Content.ReadAsStringAsync();
                     itemMasterResponse = JsonConvert.DeserializeObject<ItemMasterGetAll>(apiResponse);
                 }
+            }
+
+
+            string FieldNames = "id as Value,CategoryName as Text";
+            string TableNames = "ItemCategoryMaster";
+            string WhereCondition = "isdelete=0";
+            string DropDownId = "dd";
+
+            DropDownListItem dropDownListItem = new DropDownListItem();
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.ItemCategoryId) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.ItemCategoryId).Selected = true;
+                }
+
+                ViewBag.ItemCategoryMasterItem = listItems;
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                dropDownListItem = new DropDownListItem();
+                FieldNames = "id as Value,HsnNumber as Text";
+                TableNames = "hsnmaster";
+
+
+                listItems = new List<SelectListItem>();
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.GSTId) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.GSTId).Selected = true;
+                }
+
+                ViewBag.hsnmasterItem = listItems;
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                dropDownListItem = new DropDownListItem();
+                FieldNames = "id as Value,UnitName as Text";
+                TableNames = "UnitMaster";
+
+
+                listItems = new List<SelectListItem>();
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOM) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOM).Selected = true;
+                }
+
+                ViewBag.UOMItem = listItems;
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                dropDownListItem = new DropDownListItem();
+                FieldNames = "id as Value,UnitName as Text";
+                TableNames = "UnitMaster";
+
+
+                listItems = new List<SelectListItem>();
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
+
+                using (var response = await httpClient.GetAsync(_baseURL + "api/CommonHelper/" + FieldNames + "/" + TableNames + "/" + WhereCondition + "/" + DropDownId + "/", cancellationToken))
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    dropDownListItem = JsonConvert.DeserializeObject<DropDownListItem>(apiResponse);
+
+                }
+                foreach (var item in dropDownListItem.result)
+                {
+                    SelectListItem selectListItem = new SelectListItem();
+                    selectListItem.Value = item.Value.ToString();
+                    selectListItem.Text = item.Text;
+                    listItems.Add(selectListItem);
+                }
+
+                if (listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOMAlternateID) != null)
+                {
+                    listItems.Find(x => Convert.ToInt32(x.Value) == itemMaster.UOMAlternateID).Selected = true;
+                }
+
+                ViewBag.UOMAlternateItem = listItems;
             }
             return View(itemMasterResponse.result);
         }

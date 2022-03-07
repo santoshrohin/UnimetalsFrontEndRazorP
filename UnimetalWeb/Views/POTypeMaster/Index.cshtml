@@ -20,20 +20,21 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">PO Type Master</h3>
-                        <a asp-action="Create" asp-controller="POTypeMaster" title="Create New" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
+                        <a asp-action="Create" asp-controller="POTypeMaster" title="Create New" style="float: right;" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>Action</th>
                                     <th>
                                         PO Type
                                     </th>
                                     <th>
                                         Abbrevation
                                     </th>
-                                    <th>Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,13 +73,14 @@
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>Action</th>
                                     <th>
                                         PO Type
                                     </th>
                                     <th>
                                         Abbrevation
                                     </th>
-                                    <th>Action</th>
+
                                 </tr>
                             </tfoot>
                         </table>
@@ -95,3 +97,12 @@
 </section>
 
 
+<script>
+    var liMasters = document.getElementById("liMasters");
+    liMasters.classList.add("menu-open");
+    var liMastersA = document.getElementById("liMastersA");
+    liMastersA.classList.add("active");
+    var Master = document.getElementById("POTypeMaster");
+    Master.classList.add("active");
+
+</script>

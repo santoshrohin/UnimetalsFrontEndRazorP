@@ -1,0 +1,102 @@
+﻿@model IEnumerable<UnimetalWeb.Models.SupplierMaster>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <hr />
+
+
+        <div class="row">
+            <div class="col-12">
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Supplier Master</h3>
+                        <a asp-action="Create" asp-controller="SupplierMaster"  title="Create New" style="float: right;" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Category
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-info">Action</button>
+                                                <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" style="">
+
+                                                    <a asp-action="Edit" asp-route-id="@item.Id" title="Edit" class="dropdown-item"><i class="fas fa-edit"></i></a>
+                                                    <a asp-action="Details" asp-route-id="@item.Id" title="Details" class="dropdown-item"><i class="fas fa-info-circle"></i></a>
+                                                    <a asp-action="Delete" asp-route-id="@item.Id" title="Delete" class="dropdown-item"><i class="fas fa-trash"></i></a>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Category)
+                                        </td>
+                                        
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Category
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+<script>
+    var liMasters = document.getElementById("liMasters");
+    liMasters.classList.add("menu-open");
+    var liMastersA = document.getElementById("liMastersA");
+    liMastersA.classList.add("active");
+    var ItemMaster = document.getElementById("SupplierMaster");
+    ItemMaster.classList.add("active");
+
+</script>

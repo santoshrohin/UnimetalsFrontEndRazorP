@@ -36,6 +36,12 @@ namespace UnimetalWeb.Controllers
                 using (var httpClient = new HttpClient(handler))
                 {
                     _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
+                    if (_authResponse == null)
+                    {
+
+                        return RedirectToActionPermanent("Index", "Login");
+
+                    }
                     httpClient.Timeout = TimeSpan.FromMinutes(10);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authResponse.result.Token);
@@ -306,6 +312,10 @@ namespace UnimetalWeb.Controllers
                         TempData["ErrorMessage"] = materialtypemasterResponse.Message;
 
                     }
+                    if (materialtypemasterResponse.Message == "Duplicate Record")
+                    {
+                        return RedirectToAction("Edit", materialtypemaster.Id);
+                    }
                     if (response.IsSuccessStatusCode)
                     {
 
@@ -319,25 +329,35 @@ namespace UnimetalWeb.Controllers
             return View("Edit", materialtypemaster);
         }
         [HttpGet]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
 
             CancellationToken cancellationToken = new CancellationToken();
-
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.GetAsync(_baseURL + "api/Materialtypemaster/" + id).Result)
+                using (var response = httpClient.GetAsync(_baseURL + "api/Materialtypemaster/Delete?id=" + id).Result)
                 {
+                    StatusCommonResponse statusCommonResponse = new StatusCommonResponse();
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    statusCommonResponse = JsonConvert.DeserializeObject<StatusCommonResponse>(apiResponse);
+                    if (statusCommonResponse.IsError == false)
+                    {
+                        TempData["SuccessMessage"] = statusCommonResponse.Message;
+
+                        //TempData["InfoMessage"] = string.Format("Hello {0}.\\nCurrent Date and Time: {1}", "Anshu", DateTime.Now.ToString());
+                    }
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction("Index");
                     }
                 }
             }
+
             return View("Index");
         }
+        
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {

@@ -152,6 +152,10 @@ namespace UnimetalWeb.Controllers
                         TempData["ErrorMessage"] = traytypemasterResponse.Message;
 
                     }
+                    if (traytypemasterResponse.Message == "Duplicate Record")
+                    {
+                        return RedirectToAction("Edit", traytypemaster.Id);
+                    }
                     if (response.IsSuccessStatusCode)
                     {
 
@@ -165,23 +169,32 @@ namespace UnimetalWeb.Controllers
             return View("Edit", traytypemaster);
         }
         [HttpGet]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
 
             CancellationToken cancellationToken = new CancellationToken();
-
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.GetAsync(_baseURL + "api/Traytypemaster/" + id).Result)
+                using (var response = httpClient.GetAsync(_baseURL + "api/Traytypemaster/Delete?id=" + id).Result)
                 {
+                    StatusCommonResponse statusCommonResponse = new StatusCommonResponse();
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    statusCommonResponse = JsonConvert.DeserializeObject<StatusCommonResponse>(apiResponse);
+                    if (statusCommonResponse.IsError == false)
+                    {
+                        TempData["SuccessMessage"] = statusCommonResponse.Message;
+
+                        //TempData["InfoMessage"] = string.Format("Hello {0}.\\nCurrent Date and Time: {1}", "Anshu", DateTime.Now.ToString());
+                    }
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction("Index");
                     }
                 }
             }
+            
             return View("Index");
         }
         [HttpGet]

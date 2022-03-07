@@ -32,7 +32,9 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="@Url.Content("~/plugins/toastr/toastr.min.css")">
 
-
+    <!-- BS Stepper -->
+    
+    <link rel="stylesheet" href="@Url.Content("~/plugins/bs-stepper/css/bs-stepper.min.css")">
     <!-- Theme style -->
     <link rel="stylesheet" href="@Url.Content("~/dist/css/adminlte.min.css")">
     <!-- overlayScrollbars -->
@@ -95,7 +97,7 @@
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    
+
                     <div class="info">
                         <a href="#" class="d-block">Welcome - @TempData["userName"]</a>
                         @{ TempData.Keep("userName");}
@@ -118,10 +120,10 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
+         with font-awesome or any other icon font library -->
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item" id="liMasters">
+                            <a href="#" class="nav-link" id="liMastersA">
                                 <i class="nav-icon fas fa-circle"></i>
                                 <p>
                                     Masters
@@ -130,127 +132,121 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="UnitMaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="UnitMaster" id="UnitMaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Unit Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="TrayTypeMaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="TrayTypeMaster" style="display:none" id="TrayTypeMaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Tray Type Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Productlinemaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="Productlinemaster" style="display:none" id="Productlinemaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Product Line Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="POTypeMaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="POTypeMaster" id="POTypeMaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>PO Type Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Partitiontypemaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="Partitiontypemaster" style="display:none" id="Partitiontypemaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Partition Type Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Materialtypemaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="Materialtypemaster" id="Materialtypemaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Material Type Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Itemsubcategorymaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="Itemsubcategorymaster" style="display:none" id="Itemsubcategorymaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Item Sub Category</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="ItemMaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="ItemMaster" id="ItemMaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Item Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="ItemCategoryMaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="ItemCategoryMaster" id="ItemCategoryMaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Item Category Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="HSNMaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="HSNMaster" id="HSNMaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>HSN Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Formtypemaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="Formtypemaster" style="display:none" id="Formtypemaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Form Type Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Fixturetypemaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="Fixturetypemaster" style="display:none" id="Fixturetypemaster" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Fixture Type Master</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Productlinemaster" class="nav-link">
+                                    <a asp-action="Index" asp-controller="SupplierMaster" id="SupplierMaster" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Supplier Master</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Productlinemaster" style="display:none" id="" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Product Line Master</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Productlinemaster" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Product Line Master</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>
-                                            Level 2
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Level 3</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Level 3</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Level 3</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Level 2</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
 
+                        <li class="nav-item" id="liTransactions">
+                            <a href="#" class="nav-link" id="liTransactionsA">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Transactions
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="POMaster" id="POMaster" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Supplier PO</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Level 3</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Level 3</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
 
                     </ul>
@@ -312,7 +308,8 @@
     <script src="~/plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-
+    <!-- BS-Stepper -->
+    <script src="~/plugins/bs-stepper/js/bs-stepper.min.js"></script>
     <!-- overlayScrollbars -->
     <script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- SweetAlert2 -->
@@ -347,7 +344,7 @@
 
 
     </script>
-    @if (TempData["SuccessMessage"]  != null)
+    @if (TempData["SuccessMessage"] != null)
     {
         <script type="text/javascript">
             window.onload = function () {
@@ -409,5 +406,8 @@
             };
         </script>
     }
+
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

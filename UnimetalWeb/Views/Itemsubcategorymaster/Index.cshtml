@@ -19,18 +19,19 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Item Sub Category Master</h3>
-                        <a asp-action="Create" asp-controller="Itemsubcategorymaster" title="Create New" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
+                        <a asp-action="Create" asp-controller="Itemsubcategorymaster" title="Create New" style="float: right;" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>Action</th>
                                     <th>
                                         Sub Category Title
                                     </th>
-                                    
-                                    <th>Action</th>
+
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,3 +89,12 @@
 </section>
 
 
+<script>
+    var liMasters = document.getElementById("liMasters");
+    liMasters.classList.add("menu-open");
+    var liMastersA = document.getElementById("liMastersA");
+    liMastersA.classList.add("active");
+    var Master = document.getElementById("Itemsubcategorymaster");
+    Master.classList.add("active");
+
+</script>

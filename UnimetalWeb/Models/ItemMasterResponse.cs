@@ -49,6 +49,8 @@ namespace UnimetalWeb.Models
         public int? ItemSubCategoryId { get; set; }
         public int? GSTId { get; set; }
         public int? UOM { get; set; }
+        public int? UOMAlternateID { get; set; }
+        public float? ConvertionRatio { get; set; }
         public int? TrayTypeId { get; set; }
         public int? MaterialTypeId { get; set; }
         public int? FormTypeId { get; set; }

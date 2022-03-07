@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
                                 
-                                <label asp-for="UnitName"></label>
+                                <label asp-for="UnitName">Unit Name</label>
                                 <input asp-for="UnitName" class="form-control" />
                                 <span asp-validation-for="UnitName" class="text-danger"></span>
 
@@ -43,7 +43,7 @@
                             </div>
                             <div class="form-group">
                                 
-                                <label asp-for="UnitAbbreviation"></label>
+                                <label asp-for="UnitAbbreviation">Unit Abbreviation</label>
                                 <input asp-for="UnitAbbreviation" class="form-control" />
                                 <span asp-validation-for="UnitAbbreviation" class="text-danger"></span>
 
@@ -68,3 +68,12 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
+<script>
+    var liMasters = document.getElementById("liMasters");
+    liMasters.classList.add("menu-open");
+    var liMastersA = document.getElementById("liMastersA");
+    liMastersA.classList.add("active");
+    var Master = document.getElementById("UnitMaster");
+    Master.classList.add("active");
+
+</script>

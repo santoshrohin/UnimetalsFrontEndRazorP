@@ -1,0 +1,597 @@
+﻿@model UnimetalWeb.Models.SupplierMaster
+
+@{
+    ViewData["Title"] = "Create New";
+
+}
+
+
+<hr />
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-purple">
+            <div class="card-header">
+                <h3 class="card-title">Supplier Master</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            @Html.AntiForgeryToken()
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                @*<h3 class="card-title">bs-stepper</h3>*@
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="bs-stepper">
+                                    <div class="bs-stepper-header" role="tablist">
+                                        <!-- your steps here -->
+                                        <div class="step" data-target="#SupplierDetails">
+                                            <button type="button" class="step-trigger" role="tab" aria-controls="SupplierDetails" id="SupplierDetails-trigger">
+                                                <span class="bs-stepper-circle">1</span>
+                                                <span class="bs-stepper-label">Supplier Details</span>
+                                            </button>
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="step" data-target="#SupplierContactDetails">
+                                            <button type="button" class="step-trigger" role="tab" aria-controls="SupplierContactDetails" id="SupplierContactDetails-trigger">
+                                                <span class="bs-stepper-circle">2</span>
+                                                <span class="bs-stepper-label">Supplier Contact Details</span>
+                                            </button>
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="step" data-target="#SupplierQualityDetail">
+                                            <button type="button" class="step-trigger" role="tab" aria-controls="SupplierQualityDetail" id="SupplierQualityDetail-trigger">
+                                                <span class="bs-stepper-circle">3</span>
+                                                <span class="bs-stepper-label">Supplier Quality Detail</span>
+                                            </button>
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="step" data-target="#SupplierMachineryDetails">
+                                            <button type="button" class="step-trigger" role="tab" aria-controls="SupplierMachineryDetails" id="SupplierMachineryDetails-trigger">
+                                                <span class="bs-stepper-circle">3</span>
+                                                <span class="bs-stepper-label">Supplier Machinery Details</span>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <div class="bs-stepper-content">
+                                        <!-- your steps content here -->
+                                        <div id="SupplierDetails" class="content" role="tabpanel" aria-labelledby="SupplierDetails-trigger">
+                                            <div class="form-group">
+
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Id</label>
+                                                            <input asp-for="Id" class="form-control" disabled />
+                                                            <span asp-validation-for="Id" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Name</label>
+                                                            <input asp-for="Name" class="form-control" />
+                                                            <span class="error">Name Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Address</label>
+                                                            <input asp-for="Address" class="form-control" />
+                                                            <span class="error">Address Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Year Of Commencement</label>
+                                                            <input asp-for="YearofCommencement" class="form-control" />
+                                                            <span class="error">Year Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Phone No</label>
+                                                            <input asp-for="PhoneNo" class="form-control" />
+                                                            <span class="error">Phone No Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>GST No</label>
+                                                            <input asp-for="GSTNo" class="form-control" />
+                                                            <span class="error">GSTNo Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="col-md-1">
+                                                        <div class="form-group">
+                                                            <label>PAN</label>
+                                                            <input asp-for="PAN" class="form-control" />
+                                                            <span class="error">PAN Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div class="form-group">
+                                                            <label>TAN</label>
+                                                            <input asp-for="TAN" class="form-control" />
+                                                            <span class="error">TAN Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>BUILDINGArea</label>
+                                                            <input asp-for="BUILDINGArea" class="form-control" />
+                                                            <span class="error">BUILDINGArea Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Udyam Registration Certificate No</label>
+                                                            <input asp-for="UdyamRegistrationCertificateNo" class="form-control" />
+                                                            <span class="error">Udyam Registration Certificate No Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Category</label>
+                                                            <input asp-for="Category" class="form-control" />
+                                                            <span class="error">Category Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Weekly Off</label>
+                                                            <input asp-for="WeeklyOff" class="form-control" />
+                                                            <span class="error">WeeklyOff Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div class="form-group">
+                                                            <label>CIN</label>
+                                                            <input asp-for="CIN" class="form-control" />
+                                                            <span class="error">CIN Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Working Hours</label>
+                                                            <input asp-for="Workinghours" class="form-control" />
+                                                            <span class="error">Workinghours Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Details Of Productsor Services</label>
+                                                            <input asp-for="DetailsofProductsorServices" class="form-control" />
+                                                            <span class="error">Details Of Productsor Services Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div class="form-group">
+                                                            <label>LAND Area</label>
+                                                            <input asp-for="LANDArea" class="form-control" />
+                                                            <span class="error">LAND Area Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Constitution</label>
+                                                            <input asp-for="Constitution" class="form-control" />
+                                                            <span class="error">Constitution Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Bankers </label>
+                                                            <input asp-for="Bankers" class="form-control" />
+                                                            <span class="error">Bankers Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Certification</label>
+                                                            <input asp-for="Certification" class="form-control" />
+                                                            <span class="error">Certification Is Required</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Transportation Facility</label>
+                                                            <input asp-for="TransportationDacility" class="form-control" />
+                                                            <span class="error">Transportation Facility Is Required</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Turnover Of Last Two Years</label>
+                                                            <input asp-for="TurnoverofLastTwoYears" class="form-control" />
+                                                            <span class="error">Turnover Of Last Two Years Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Over All Production Capacity</label>
+                                                            <input asp-for="OverallProductionCapacity" class="form-control" />
+                                                            <span class="error">Over All Production Capacity Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Current Capacity Utilize</label>
+                                                            <input asp-for="CurrentCapacityUtilize" class="form-control" />
+                                                            <span class="error">Current Capacity Utilize Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Safety Or Environmental Compliance</label>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" name="option" id="SafetyOrEnvironmentalCompliance">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>Msme Applicable</label>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" name="option" id="MsmeApplicable">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <label>Hazardous Waste Management Process</label>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" name="option" id="HazardousWasteManagementProcess">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>Reach And RoHS Compliance</label>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" name="option" id="ReachAndRoHSCompliance">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row"><br /></div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>Products Or Process Environment Friendly</label>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" name="option" id="ProductsOrProcessEnvironmentFriendly">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Spare Capacity</label>
+                                                            <input asp-for="SpareCapacity" class="form-control" />
+                                                            <span class="error">Spare Capacity Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>No Of Samples</label>
+                                                            <input asp-for="NoofSamples" class="form-control" />
+                                                            <span class="error">No Of Samples Is Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Msme Certificate</label>
+                                                            <input asp-for="MsmeCertificate" class="form-control" />
+                                                            <span class="error">Msme Certificate</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>Tally Name</label>
+                                                            <input asp-for="TallyName" class="form-control" />
+                                                            <span class="error">Tally Name</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+                                        </div>
+
+                                        <div id="SupplierContactDetails" class="content" role="tabpanel" aria-labelledby="SupplierContactDetails-trigger">
+                                            <div class="form-group">
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="card-title">Click On Add To Add New Record</h3>
+
+
+                                                            </div>
+                                                            <!-- /.card-header -->
+                                                            <div class="card-body table-responsive p-0">
+                                                                <table class="table table-hover text-nowrap">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Contact Type</th>
+                                                                            <th>Name</th>
+                                                                            <th>Designation</th>
+                                                                            <th>Contact No</th>
+                                                                            <th>Email Id</th>
+                                                                            <th>Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr id="mainrow">
+                                                                            <td>
+                                                                                <input type="text" class="ContactType form-control" id="ContactType" placeholder="Contact Type">
+                                                                                <span class="error">Contact Type Is Required</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="txtName form-control" id="txtName" placeholder="Name">
+                                                                                <span class="error">Name Is Required</span>
+                                                                            </td>
+                                                                            <td>
+
+                                                                                <input type="text" class="Designation form-control" id="Designation" placeholder="Designation">
+                                                                                <span class="error">Designation Is Required</span>
+                                                                            </td>
+                                                                            <td>
+
+                                                                                <input type="text" class="ContactNo form-control" id="ContactNo" placeholder="Contact No">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="EmailId form-control" id="EmailId" placeholder="Email Id">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="button" id="add" value="add" class="btn btn-success" />
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+                                                            <!-- /.card-body -->
+                                                        </div>
+                                                        <!-- /.card -->
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <table id="tblsuppContactDetails" class="table table-hover text-nowrap">
+                                                    </table>
+                                                    <span id="ErrorSupplierContactDetails" style="color:red"></span>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                                            <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+
+                                        </div>
+
+                                        <div id="SupplierQualityDetail" class="content" role="tabpanel" aria-labelledby="SupplierQualityDetail-trigger">
+                                            <div class="form-group">
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="card-title">Click On Add To Add New Record</h3>
+
+
+                                                            </div>
+                                                            <!-- /.card-header -->
+                                                            <div class="card-body table-responsive p-0">
+                                                                <table class="table table-hover text-nowrap">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Instrument Name</th>
+                                                                            <th>Make</th>
+                                                                            <th>CalibrationFacility</th>
+                                                                            <th>Qty</th>
+                                                                            <th>Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr id="SupplierQualityDetailmainrow">
+                                                                            <td>
+                                                                                <input type="text" class="InstrumentName form-control" id="InstrumentName" placeholder="Instrument Name">
+                                                                                <span class="error">Instrument Name Is Required</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="Make1 form-control" id="Make1" placeholder="Make">
+                                                                                <span class="error">Make Is Required</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <label>Safety Or Environmental Compliance</label>
+                                                                                <input type="checkbox" class="CalibrationFacility" name="option" id="CalibrationFacility">
+                                                                                <span class="error">CalibrationFacility Is Required</span>
+                                                                            </td>
+                                                                            <td>
+
+                                                                                <input type="text" class="Qty form-control" id="Qty" placeholder="Qty">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="button" id="SupplierQualityDetailmainrowadd" value="add" class="btn btn-success" />
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+                                                            <!-- /.card-body -->
+                                                        </div>
+                                                        <!-- /.card -->
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <table id="tblrequestSupplierQualityDetail" class="table table-hover text-nowrap">
+                                                    </table>
+                                                    <span id="ErrorrequestSupplierQualityDetail" style="color:red"></span>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                                            <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+
+                                        </div>
+
+                                        <div id="SupplierMachineryDetails" class="content" role="tabpanel" aria-labelledby="SupplierMachineryDetails-trigger">
+                                            <div class="form-group">
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="card-title">Click On Add To Add New Record</h3>
+
+
+                                                            </div>
+                                                            <!-- /.card-header -->
+                                                            <div class="card-body table-responsive p-0">
+                                                                <table class="table table-hover text-nowrap">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Machine Name</th>
+                                                                            <th>Make</th>
+                                                                            <th>Capacity</th>
+                                                                            <th>Qty</th>
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr id="SupplierMachineryDetailsrow">
+                                                                            <td>
+                                                                                <input type="text" class="MachineName form-control" id="MachineName" placeholder="Machine Name">
+                                                                                <span class="error">Machine Name Is Required</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="Make form-control" id="Make" placeholder="Make">
+                                                                                <span class="error">Make Is Required</span>
+                                                                            </td>
+                                                                            <td>
+
+                                                                                <input type="text" class="Capacity form-control" id="Capacity" placeholder="Capacity">
+                                                                                <span class="error">Capacity Is Required</span>
+                                                                            </td>
+                                                                            <td>
+
+                                                                                <input type="text" class="MQty form-control" id="MQty" placeholder="Qty">
+                                                                                <span class="error">Qty Is Required</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="button" id="Machineryadd" value="add" class="btn btn-success" />
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+                                                            <!-- /.card-body -->
+                                                        </div>
+                                                        <!-- /.card -->
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <table id="tblSupplierMachineryDetails" class="table table-hover text-nowrap">
+                                                    </table>
+                                                    <span id="ErrortblSupplierMachineryDetails" style="color:red"></span>
+                                                </div>
+                                            </div>
+
+                                            <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                               Supplier Details
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="card-footer">
+                <input type="submit" id="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-danger">Back to List</a>
+            </div>
+
+
+
+        </div>
+
+    </div><!-- /.container-fluid -->
+</section>
+
+
+@section Scripts {
+    <script>
+    var redirecturl = '@Url.Action("Index", "SupplierMaster")';
+    </script>
+    <script src="~/Scripts/SupplierMasterDetail.js"></script>
+    <script>
+        var liMasters = document.getElementById("liMasters");
+        liMasters.classList.add("menu-open");
+        var liMastersA = document.getElementById("liMastersA");
+        liMastersA.classList.add("active");
+        var ItemMaster = document.getElementById("SupplierMaster");
+        ItemMaster.classList.add("active");
+
+        // BS-Stepper Init
+        document.addEventListener('DOMContentLoaded', function () {
+            window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        })
+
+
+
+    </script>
+
+
+}
+<style>
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>

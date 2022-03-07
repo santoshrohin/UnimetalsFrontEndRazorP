@@ -1,0 +1,325 @@
+﻿@model UnimetalWeb.Models.Transactions.POMaster
+
+@{
+    ViewData["Title"] = "Create New";
+
+}
+
+
+<hr />
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-purple">
+            <div class="card-header">
+                <h3 class="card-title">Supplier PO</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            @Html.AntiForgeryToken()
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Id</label>
+                            <input asp-for="Id" class="form-control" disabled />
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>PO NO</label>
+                            <input asp-for="PONO" class="form-control" placeholder="PO Number" />
+                            <span class="error">PO Number Is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+
+                        <div class="form-group">
+                            <label> Supplier Name</label>
+
+                            <select id="ddlSupplierId" asp-for="SupplierId" class="form-control select2" asp-items="@(new SelectList(ViewBag.ItemSupplierMasterItems, "Value", "Text"))">
+                                <option value="">--Select--</option>
+                            </select>
+
+
+                            <span asp-validation-for="SupplierId" class="text-danger"></span>
+                            <input type="hidden" asp-for="SupplierId" />
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Type</label>
+                            <input asp-for="Type" class="form-control" type="number" min="0" placeholder="Type" />
+                            <span class="error">Type Is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>PODate</label>
+                            <input asp-for="PODate" asp-format="{0:dd/MM/yyyy}" class="form-control" type="date" />
+
+                            <span class="error">Date Is Required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>PO Abbrevation</label>
+                            <input asp-for="POAbbrevation" class="form-control" placeholder="PO Abbrevation" />
+                            <span class="error">PO Abbrevation Is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Supplier Ref</label>
+                            <input asp-for="SupplierRef" class="form-control" placeholder="Supplier Ref" />
+                            <span class="error">Supplier Ref Is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Supplier Ref Date</label>
+                            <input asp-for="SupplierRefDate" asp-format="{0:dd/MM/yyyy}" class="form-control" type="date" />
+
+                            <span class="error">Supplier Ref Date Is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>PO Validity Date</label>
+                            <input asp-for="POValidityDate" asp-format="{0:dd/MM/yyyy}" class="form-control" type="date" />
+
+                            <span class="error">PO Validity Date Is Required</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Freight</label>
+                            <input asp-for="Freight" class="form-control" placeholder="Freight" />
+                            <span class="error">Freight Is Required</span>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Click On Add To Add New Record</h3>
+
+
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Item Code</th>
+                                                <th>Item Unit</th>
+                                                <th>Item GST</th>
+                                                <th>Rate Unit</th>
+                                                <th>Description</th>
+                                                <th>Order Qty</th>
+                                                <th>Quantity</th>
+                                                <th>Amount</th>
+                                                <th>Disc Per</th>
+                                                <th>Disc Amt</th>
+
+                                                <th>Conv Rate</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="detailcontainer" id="SupplierPODetailmainrow">
+                                                <td class="col-md-6">
+
+                                                    <select id="Icode" class="Icode form-control select2" onchange="LoadUnit(this)">
+                                                        <option>Select</option>
+                                                    </select>
+                                                    <span class="error">Item Code Is Required</span>
+                                                </td>
+                                                <td>
+
+                                                    <input type="text" class="ItemUnit form-control" id="ItemUnit" placeholder="Item Unit">
+                                                </td>
+                                                <td>
+                                                    <select id="ItemGST" class="ItemGST form-control select2">
+                                                        <option>Select</option>
+                                                    </select>
+                                                    <span class="error">ItemGST Is Required</span>
+                                                </td>
+                                                <td>
+                                                    <select id="RateUnit" class="RateUnit form-control select2">
+                                                        <option>Select</option>
+                                                    </select>
+                                                    <span class="error">RateUnit Is Required</span>
+                                                </td>
+                                                <td>
+
+                                                    <input type="text" class="Description form-control" id="Description" placeholder="Description">
+                                                    <span class="error">Description Is Required</span>
+                                                </td>
+
+                                                <td>
+
+                                                    <input class="OrderQty form-control" id="OrderQty" placeholder="OrderQty" type="number" step="0.01" min="0">
+                                                </td>
+                                                <td>
+
+                                                    <input type="number" step="0.01" min="0" class="Rate form-control" id="Rate" placeholder="Rate">
+                                                </td>
+                                                <td>
+
+                                                    <input type="number" step="0.01" min="0" class="Amt form-control" id="Amt" placeholder="Amount">
+                                                </td>
+                                                <td>
+
+                                                    <input type="number" step="0.01" min="0" class="DiscPer form-control" id="DiscPer" placeholder="DiscPer">
+                                                </td>
+                                                <td>
+
+                                                    <input type="number" step="0.01" min="0" class="DiscAmt form-control" id="DiscAmt" placeholder="DiscAmt">
+                                                </td>
+
+                                                <td>
+
+                                                    <input type="text" class="ConvRate form-control" id="ConvRate" placeholder="ConvRate">
+                                                </td>
+                                                <td style="display: none;">
+                                                    <input type="number" step="0.01" min="0" class="CGSTRate form-control" id="CGSTRate" placeholder="CGSTRate">
+                                                </td>
+                                                <td style="display: none;">
+                                                    <input type="number" step="0.01" min="0" class="SGSTRate form-control" id="SGSTRate" placeholder="SGSTRate">
+                                                </td>
+                                                <td style="display: none;">
+                                                    <input type="number" step="0.01" min="0" class="IGSTRate form-control" id="IGSTRate" placeholder="IGSTRate">
+                                                </td>
+                                                <td style="display: none;">
+                                                    <input type="number" step="0.01" min="0" class="CGSTAmt form-control" id="CGSTAmt" placeholder="CGSTAmt">
+                                                </td>
+                                                <td style="display: none;">
+                                                    <input type="number" step="0.01" min="0" class="SGSTAmt form-control" id="SGSTAmt" placeholder="SGSTAmt">
+                                                </td>
+                                                <td style="display: none;">
+                                                    <input type="number" step="0.01" min="0" class="IGSTAmt form-control" id="IGSTAmt" placeholder="IGSTAmt">
+                                                </td>
+                                                <td>
+                                                    <input type="button" id="SupplierQualityDetailmainrowadd" value="add" class="btn btn-success" />
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <table id="tblrequestSupplierQualityDetail" class="table table-hover text-nowrap">
+                        </table>
+                        <span id="ErrorrequestSupplierQualityDetail" style="color:red"></span>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Notes</label>
+                            <textarea asp-for="Notes" rows="2" cols="80"></textarea>
+
+                            <span class="error">Notes Is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Payment Terms</label>
+                            <textarea asp-for="PaymentTerms" rows="2" cols="80"></textarea>
+
+                            <span class="error">Payment Terms Is Required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label>Delivery Inst</label>
+                            <input asp-for="DelivaryInst" class="form-control" placeholder="Delivery Ref" />
+                            <span class="error">Delivery Inst Is Required</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Delivery Mode</label>
+                            <input asp-for="DelivaryMode" class="form-control" placeholder="Delivery Mode" />
+                            <span class="error">Delivery Is Required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-footer">
+                <input type="submit" id="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-danger">Back to List</a>
+            </div>
+
+
+
+        </div>
+
+    </div><!-- /.container-fluid -->
+</section>
+
+
+@section Scripts {
+    <script>
+    var redirecturl = '@Url.Action("Index", "SupplierMaster")';
+    </script>
+    <script src="~/Scripts/Transactions/SupplierPO/Create/CreateSupplierPO.js"></script>
+    <script>
+        var liMasters = document.getElementById("liMasters");
+        liMasters.classList.add("menu-open");
+        var liMastersA = document.getElementById("liMastersA");
+        liMastersA.classList.add("active");
+        var SupplierMaster = document.getElementById("SupplierMaster");
+        SupplierMaster.classList.add("active");
+    </script>
+
+
+}
+<style>
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>

@@ -35,7 +35,7 @@
                     </div>
                     <div class="form-group">
 
-                        <label asp-for="POType"></label>
+                        <label asp-for="POType">PO Type</label>
                         <input asp-for="POType" class="form-control" />
                         <span asp-validation-for="POType" class="text-danger"></span>
 
@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group">
 
-                        <label asp-for="POTypeDescription"></label>
+                        <label asp-for="POTypeDescription">PO Type Description</label>
                         <input asp-for="POTypeDescription" class="form-control" />
                         <span asp-validation-for="POTypeDescription" class="text-danger"></span>
 
@@ -75,3 +75,12 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
+<script>
+    var liMasters = document.getElementById("liMasters");
+    liMasters.classList.add("menu-open");
+    var liMastersA = document.getElementById("liMastersA");
+    liMastersA.classList.add("active");
+    var Master = document.getElementById("POTypeMaster");
+    Master.classList.add("active");
+
+</script>

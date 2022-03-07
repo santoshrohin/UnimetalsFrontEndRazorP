@@ -33,6 +33,12 @@ namespace UnimetalWeb.Controllers
                 using (var httpClient = new HttpClient(handler))
                 {
                     _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
+                    if (_authResponse == null)
+                    {
+
+                        return RedirectToActionPermanent("Index", "Login");
+
+                    }
                     httpClient.Timeout = TimeSpan.FromMinutes(10);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authResponse.result.Token);
@@ -51,7 +57,7 @@ namespace UnimetalWeb.Controllers
         {
             CancellationToken cancellationToken = new CancellationToken();
             POTypeMasterResponseGetAll pOTypeMasterResponse = new POTypeMasterResponseGetAll();
-            POTypeMaster productlinemaster = new POTypeMaster();
+            POTypeMaster pOTypeMaster = new POTypeMaster();
 
             using (var httpClient = new HttpClient())
             {
@@ -62,30 +68,30 @@ namespace UnimetalWeb.Controllers
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
                     pOTypeMasterResponse = JsonConvert.DeserializeObject<POTypeMasterResponseGetAll>(apiResponse);
-                    productlinemaster = pOTypeMasterResponse.result;
+                    pOTypeMaster = pOTypeMasterResponse.result;
 
                 }
             }
-            return View(productlinemaster);
+            return View(pOTypeMaster);
         }
         public ActionResult Create()
         {
             return View("Edit");
         }
         [HttpPost]
-        public async Task<ActionResult> Create(POTypeMaster productlinemaster)
+        public async Task<ActionResult> Create(POTypeMaster pOTypeMaster)
         {
             _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
-            productlinemaster.Id = 0;
-            productlinemaster.CompanyId = _authResponse.result.CompanyId; ;
-            productlinemaster.CompanyCode = _authResponse.result.Id;
-            productlinemaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
-            productlinemaster.UserName = _authResponse.result.Username;
-            productlinemaster.IsModify = false;
-            productlinemaster.IsDelete = false;
+            pOTypeMaster.Id = 0;
+            pOTypeMaster.CompanyId = _authResponse.result.CompanyId; ;
+            pOTypeMaster.CompanyCode = _authResponse.result.Id;
+            pOTypeMaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
+            pOTypeMaster.UserName = _authResponse.result.Username;
+            pOTypeMaster.IsModify = false;
+            pOTypeMaster.IsDelete = false;
             POTypeMasterResponseGetAll pOTypeMasterResponse = new POTypeMasterResponseGetAll();
             CancellationToken cancellationToken = new CancellationToken();
-            string data = JsonConvert.SerializeObject(productlinemaster);
+            string data = JsonConvert.SerializeObject(pOTypeMaster);
             StringContent stringContent = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
@@ -117,20 +123,20 @@ namespace UnimetalWeb.Controllers
             return View("Edit");
         }
         [HttpPost]
-        public async Task<ActionResult> Edit(POTypeMaster productlinemaster)
+        public async Task<ActionResult> Edit(POTypeMaster  pOTypeMaster)
         {
 
             _authResponse = HttpContext.Session.GetObjectFromJson<AuthResponse>("loginDetails");
-            productlinemaster.CompanyId = _authResponse.result.CompanyId; ;
-            productlinemaster.CompanyCode = _authResponse.result.Id;
-            productlinemaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
-            productlinemaster.UserName = _authResponse.result.Username;
-            productlinemaster.IsModify = false;
-            productlinemaster.IsDelete = false;
+            pOTypeMaster.CompanyId = _authResponse.result.CompanyId; ;
+            pOTypeMaster.CompanyCode = _authResponse.result.Id;
+            pOTypeMaster.LastUpdatedDateandtime = CommonClasses.GetCurrentTime();
+            pOTypeMaster.UserName = _authResponse.result.Username;
+            pOTypeMaster.IsModify = false;
+            pOTypeMaster.IsDelete = false;
 
             POTypeMasterResponseGetAll pOTypeMasterResponse = new POTypeMasterResponseGetAll();
             CancellationToken cancellationToken = new CancellationToken();
-            string data = JsonConvert.SerializeObject(productlinemaster);
+            string data = JsonConvert.SerializeObject(pOTypeMaster);
             StringContent stringContent = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
@@ -152,6 +158,10 @@ namespace UnimetalWeb.Controllers
                         TempData["ErrorMessage"] = pOTypeMasterResponse.Message;
 
                     }
+                    if (pOTypeMasterResponse.Message == "Duplicate Record")
+                    {
+                        return RedirectToAction("Edit", pOTypeMaster.Id);
+                    }
                     if (response.IsSuccessStatusCode)
                     {
 
@@ -162,28 +172,38 @@ namespace UnimetalWeb.Controllers
 
                 }
             }
-            return View("Edit", productlinemaster);
+            return View("Edit", pOTypeMaster);
         }
         [HttpGet]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
 
             CancellationToken cancellationToken = new CancellationToken();
-
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
 
-                using (var response = httpClient.GetAsync(_baseURL + "api/POTypeMaster/" + id).Result)
+                using (var response = httpClient.GetAsync(_baseURL + "api/POTypeMaster/Delete?id=" + id).Result)
                 {
+                    StatusCommonResponse statusCommonResponse = new StatusCommonResponse();
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    statusCommonResponse = JsonConvert.DeserializeObject<StatusCommonResponse>(apiResponse);
+                    if (statusCommonResponse.IsError == false)
+                    {
+                        TempData["SuccessMessage"] = statusCommonResponse.Message;
+
+                        //TempData["InfoMessage"] = string.Format("Hello {0}.\\nCurrent Date and Time: {1}", "Anshu", DateTime.Now.ToString());
+                    }
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction("Index");
                     }
                 }
             }
+
             return View("Index");
         }
+        
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {

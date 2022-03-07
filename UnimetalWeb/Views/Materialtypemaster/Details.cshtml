@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
 
-                                <label asp-for="MaterialTypeTitle"></label>
+                                <label asp-for="MaterialTypeTitle">Material Type Title</label>
                                 <input asp-for="MaterialTypeTitle" class="form-control" />
                                 <span asp-validation-for="MaterialTypeTitle" class="text-danger"></span>
 
@@ -48,9 +48,9 @@
                                 <span asp-validation-for="Abbreviation" class="text-danger"></span>
 
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
 
-                                <label asp-for="MaterialTypeCategoryID"></label>
+                                <label asp-for="MaterialTypeCategoryID">Material Type Category</label>
                                 @if (Model.MaterialTypeCategoryID != 0)
                                 {
                                     <select id="ddlMaterialTypeCategoryID" asp-for="MaterialTypeCategoryID" class="form-control select2" asp-items="@(new SelectList(ViewBag.MaterialTypeCategoryItem, "Value", "Text", Model.MaterialTypeCategoryID))">
@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-group">
 
-                                <label asp-for="MaterialTypeProductLineID"></label>
+                                <label asp-for="MaterialTypeProductLineID">Material Type Product Line</label>
                                 @if (Model.MaterialTypeProductLineID != 0)
                                 {
                                     <select id="ddlMaterialTypeProductLineID" asp-for="MaterialTypeProductLineID" class="form-control select2" asp-items="@(new SelectList(ViewBag.MaterialTypeProductLineItem, "Value", "Text", Model.MaterialTypeProductLineID))">
@@ -87,7 +87,7 @@
                                 <span asp-validation-for="MaterialTypeProductLineID" class="text-danger"></span>
                                 <input type="hidden" asp-for="MaterialTypeProductLineID" />
 
-                            </div>
+                            </div>*@
 
                         </div>
                         <!-- /.card-body -->
@@ -110,3 +110,12 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
+<script>
+    var liMasters = document.getElementById("liMasters");
+    liMasters.classList.add("menu-open");
+    var liMastersA = document.getElementById("liMastersA");
+    liMastersA.classList.add("active");
+    var Master = document.getElementById("Materialtypemaster");
+    Master.classList.add("active");
+
+</script>

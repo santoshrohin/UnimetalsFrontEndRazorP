@@ -1,0 +1,121 @@
+﻿@model UnimetalWeb.Models.HSNMaster
+
+@{
+    ViewData["Title"] = "Details";
+
+}
+
+
+<hr />
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">HSN Master</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="Id"></label>
+                                <input asp-for="Id" class="form-control" disabled />
+                                <span asp-validation-for="Id" class="text-danger"></span>
+
+
+
+                            </div>
+                            <div class="form-group">
+
+                                <label>Hsn Number</label>
+                                <input asp-for="HsnNumber" class="form-control" />
+                                <span asp-validation-for="HsnNumber" class="text-danger"></span>
+
+
+                            </div>
+                            <div class="form-group">
+
+                                <label>Hsn Name</label>
+                                <input asp-for="HsnName" class="form-control" />
+                                <span asp-validation-for="HsnName" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label asp-for="HsnType">Hsn Type</label>
+                                @if (Model.HsnType != 0)
+                                {
+                                    <select id="ddlMaterialTypeProductLineID" asp-for="HsnType" class="form-control select2" asp-items="@(new SelectList(ViewBag.HsnTypeItem, "Value", "Text", Model.HsnType))">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select id="ddlMaterialTypeProductLineID" asp-for="HsnType" class="form-control select2" asp-items="@(new SelectList(ViewBag.HsnTypeItem, "Value", "Text"))">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                }
+
+                                <span asp-validation-for="HsnType" class="text-danger"></span>
+                                <input type="hidden" asp-for="HsnType" />
+
+                            </div>
+                            <div class="form-group">
+
+                                <label>Hsn Igst</label>
+                                <input asp-for="HsnIgst" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="HsnIgst" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label>Hsn Cgst</label>
+                                <input asp-for="HsnCgst" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="HsnCgst" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label>Hsn Sgst</label>
+                                <input asp-for="HsnSgst" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="HsnSgst" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+
+                            <a asp-action="Edit" asp-controller="HSNMaster" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+                            <a asp-action="Index" class="btn btn-danger">Back to List</a>
+                        </div>
+
+                    }
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+<script>
+    var liMasters = document.getElementById("liMasters");
+    liMasters.classList.add("menu-open");
+    var liMastersA = document.getElementById("liMastersA");
+    liMastersA.classList.add("active");
+    var Master = document.getElementById("HSNMaster");
+    Master.classList.add("active");
+
+</script>

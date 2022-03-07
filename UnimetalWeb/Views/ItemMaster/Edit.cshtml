@@ -11,60 +11,408 @@
 
 <section class="content">
     <div class="container-fluid">
-        <div class="row">
+        <div class="card card-purple">
+            <div class="card-header">
+                <h3 class="card-title">Material Master</h3>
 
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Item Master</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+
+
+                        <label>Id</label>
+                        <input asp-for="Id" class="form-control" disabled />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+
                     </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label asp-for="Id"></label>
-                                <input asp-for="Id" class="form-control" disabled />
-                                <span asp-validation-for="Id" class="text-danger"></span>
-
-
-
-                            </div>
-                            <div class="form-group">
-
-                                <label asp-for="PartName"></label>
-                                <input asp-for="PartName" class="form-control" />
-                                <span asp-validation-for="PartName" class="text-danger"></span>
-
-
-                            </div>
-                            <div class="form-group">
-
-                                <label asp-for="PartName"></label>
-                                <input asp-for="PartName" class="form-control" />
-                                <span asp-validation-for="PartName" class="text-danger"></span>
-
-                            </div>
-
-                        </div>
-                        <!-- /.card-body -->
-
-                        <div class="card-footer">
-                            <input type="submit" value="Save" class="btn btn-primary" />
-                            <a asp-action="Index" class="btn btn-danger">Back to List</a>
-                        </div>
-
-                    }
 
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label>Part Code</label>
+                        <input asp-for="PartCode" class="form-control" />
+                        <span asp-validation-for="PartCode" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
 
 
+                        <label>Part Name</label>
+                        <input asp-for="PartName" class="form-control" />
+                        <span asp-validation-for="PartName" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label>Width</label>
+                        <input asp-for="Width" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="Width" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+
+
+                        <label>Length</label>
+                        <input asp-for="Length" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="Length" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label>Thickness</label>
+                        <input asp-for="Thickness" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="Thickness" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+
+
+                        <label>OD</label>
+                        <input asp-for="OD" class="form-control" />
+                        <span asp-validation-for="OD" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label>Store Location</label>
+                        <input asp-for="StoreLocation" class="form-control" />
+                        <span asp-validation-for="StoreLocation" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+
+
+                        <label>Min Level</label>
+                        <input asp-for="MinLevel" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="MinLevel" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label>Max Level</label>
+                        <input asp-for="MaxLevel" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="MaxLevel" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+
+
+                        <label>Re-Order Level</label>
+                        <input asp-for="ReOrderLevel" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="ReOrderLevel" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label>No Of Trays</label>
+                        <input asp-for="NoOfTrays" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="NoOfTrays" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+
+
+                        <label>Height</label>
+                        <input asp-for="ReOrderLevel" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="ReOrderLevel" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label>Type</label>
+                        <input asp-for="Type" class="form-control" />
+                        <span asp-validation-for="Type" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label >Shelf Life</label>
+                        <div class="custom-control custom-checkbox">
+                            @Html.CheckBox("ShelfLife", Model.ShelfLife)
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label for="@Model.IsActive">Is Active</label>
+                        <div class="custom-control custom-checkbox">
+                            @Html.CheckBox("ShelfLife", Model.IsActive)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+
+
+                        <label>Location</label>
+                        <input asp-for="Location" class="form-control" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label>AutoCad No</label>
+                        <input asp-for="AutoCadNo" class="form-control" />
+                        <span asp-validation-for="AutoCadNo" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="@Model.IsLock">Lock</label>
+                        <div class="custom-control custom-checkbox">
+
+                            @Html.CheckBox("IsLock", Model.IsLock)
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label for="@Model.LedArrangement">Led Arrangement</label>
+                        <div class="custom-control custom-checkbox">
+
+
+
+                            @Html.CheckBox("LedArrangement", Model.LedArrangement)
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label> Material Category</label>
+                        @if (Model.ItemCategoryId != 0)
+                        {
+                            <select id="ddlItemCategoryId" asp-for="ItemCategoryId" class="form-control select2" asp-items="@(new SelectList(ViewBag.ItemCategoryMasterItem, "Value", "Text", Model.ItemCategoryId))">
+                                <option value="">--Select--</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select id="ddlItemCategoryId" asp-for="ItemCategoryId" class="form-control select2" asp-items="@(new SelectList(ViewBag.ItemCategoryMasterItem, "Value", "Text"))">
+                                <option value="">--Select--</option>
+                            </select>
+                        }
+
+                        <span asp-validation-for="ItemCategoryId" class="text-danger"></span>
+                        <input type="hidden" asp-for="ItemCategoryId" />
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label> GST</label>
+                        @if (Model.GSTId != 0)
+                        {
+                            <select id="ddlGSTId" asp-for="GSTId" class="form-control select2" asp-items="@(new SelectList(ViewBag.hsnmasterItem, "Value", "Text", Model.GSTId))">
+                                <option value="">--Select--</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select id="ddlGSTId" asp-for="GSTId" class="form-control select2" asp-items="@(new SelectList(ViewBag.hsnmasterItem, "Value", "Text"))">
+                                <option value="">--Select--</option>
+                            </select>
+                        }
+
+                        <span asp-validation-for="GSTId" class="text-danger"></span>
+                        <input type="hidden" asp-for="GSTId" />
+
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label> UOM</label>
+                        @if (Model.UOM != 0)
+                        {
+                            <select id="ddlUOMID" asp-for="UOM" class="form-control select2" asp-items="@(new SelectList(ViewBag.UOMItem, "Value", "Text", Model.UOM))">
+                                <option value="">--Select--</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select id="ddlUOMID" asp-for="UOM" class="form-control select2" asp-items="@(new SelectList(ViewBag.UOMItem, "Value", "Text"))">
+                                <option value="">--Select--</option>
+                            </select>
+                        }
+
+                        <span asp-validation-for="UOM" class="text-danger"></span>
+                        <input type="hidden" asp-for="UOM" />
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label> Alternate Unit</label>
+                        @if (Model.UOMAlternateID != 0)
+                        {
+                            <select id="ddlUOMAlternateID" asp-for="UOMAlternateID" class="form-control select2" asp-items="@(new SelectList(ViewBag.UOMAlternateItem, "Value", "Text", Model.UOMAlternateID))">
+                                <option value="">--Select--</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select id="ddlUOMAlternateID" asp-for="UOMAlternateID" class="form-control select2" asp-items="@(new SelectList(ViewBag.UOMAlternateItem, "Value", "Text"))">
+                                <option value="">--Select--</option>
+                            </select>
+                        }
+
+                        <span asp-validation-for="UOMAlternateID" class="text-danger"></span>
+                        <input type="hidden" asp-for="UOMAlternateID" />
+
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+
+
+                        <label>Convertion Ratio</label>
+                        <input asp-for="ConvertionRatio" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="ConvertionRatio" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+                
             </div>
 
         </div>
-        <!-- /.row -->
+
+
+                <div class="card-footer">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-danger">Back to List</a>
+                </div>
+
+            }
+
+        </div>
+       
     </div><!-- /.container-fluid -->
 </section>
+<script>
+    var liMasters = document.getElementById("liMasters");
+    liMasters.classList.add("menu-open");
+    var liMastersA = document.getElementById("liMastersA");
+    liMastersA.classList.add("active");
+    var ItemMaster = document.getElementById("ItemMaster");
+    ItemMaster.classList.add("active");
+    
+</script>
